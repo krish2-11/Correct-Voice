@@ -14,11 +14,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Login extends AppCompatActivity {
 
-    Button login;
+    Button login , reg;
     EditText email , pass;
-    TextView reg;
+    private FirebaseAuth auth;
+    private FirebaseDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,34 +34,23 @@ public class Login extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        login = (Button) findViewById(R.id.reguser);
+
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
+        login = (Button) findViewById(R.id.loginButton);
         email = (EditText) findViewById(R.id.name);
-        pass = (EditText) findViewById(R.id.email);
-        reg = (TextView) findViewById(R.id.logn);
+        pass = (EditText) findViewById(R.id.password);
+        reg = (Button) findViewById(R.id.signupButton);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String emailstr = email.getText().toString().trim();
                 String passstr = pass.getText().toString().trim();
-                if(emailstr.isEmpty() || passstr.isEmpty()){
-                    Toast.makeText(Login.this , "Field is empty!!" , Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    boolean auth = false;
-                    try {
-                        auth = new DbHandler(Login.this).search(emailstr , passstr);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    if(auth){
-                        startActivity(new Intent(Login.this , Home.class));
-                        Toast.makeText(Login.this , "Login successfull!!" , Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Toast.makeText(Login.this , "Invalid email or password" , Toast.LENGTH_SHORT).show();
-                        email.setText("");
-                        pass.setText("");
-                    }
+                if (emailstr.isEmpty() || passstr.isEmpty()) {
+                    Toast.makeText(Login.this, "Field is empty!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    signInAccount(emailstr , passstr);
                 }
 
             }
@@ -69,5 +63,17 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+    private void signInAccount(String uemail , String upass) {
+        auth.signInWithEmailAndPassword(uemail , upass).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                FirebaseUser user = auth.getCurrentUser();
+                Toast.makeText(Login.this , "Login Successful!" , Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Login.this , Home.class));
+            }
+            else{
+                Toast.makeText(Login.this , "Login failed!" , Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
