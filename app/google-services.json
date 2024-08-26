@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "769512653613",
+    "project_id": "correct-voice",
+    "storage_bucket": "correct-voice.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769512653613:android:e088df6baced64ad65c9a4",
+        "android_client_info": {
+          "package_name": "com.example.correctvoice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiXImyKdvgXVm8zSmFo3dgQiy1tucx6RE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
