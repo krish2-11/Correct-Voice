@@ -87,7 +87,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="Login"
-                android:background="@drawable/round_button"
+                android:textColor="@color/greenish"
+                android:background="@drawable/buttonstyle"
                 app:cornerRadius="32dp"
                 />
 
@@ -110,8 +111,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="Register"
-                android:textColor="@color/black"
-                android:background="@drawable/round_button"
+                android:textColor="@color/greenish"
+                android:background="@drawable/buttonstyle"
                 app:cornerRadius="32dp"
                 />
 

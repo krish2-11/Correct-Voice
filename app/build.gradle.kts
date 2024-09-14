@@ -30,10 +30,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    viewBinding{
+        enable = true
+    }
 }
 
 dependencies {
-
+    implementation(libs.squareup.picasso)
+    implementation (libs.retrofit)
+    implementation(libs.converter.gson)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

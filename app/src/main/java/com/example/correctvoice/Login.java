@@ -1,29 +1,32 @@
 package com.example.correctvoice;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class Login extends AppCompatActivity {
-
     Button login , reg;
     EditText email , pass;
     private FirebaseAuth auth;
-    private FirebaseDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +39,6 @@ public class Login extends AppCompatActivity {
         });
 
         auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-
         login = (Button) findViewById(R.id.loginButton);
         email = (EditText) findViewById(R.id.name);
         pass = (EditText) findViewById(R.id.password);
@@ -50,9 +51,9 @@ public class Login extends AppCompatActivity {
                 if (emailstr.isEmpty() || passstr.isEmpty()) {
                     Toast.makeText(Login.this, "Field is empty!!", Toast.LENGTH_SHORT).show();
                 } else {
-                    signInAccount(emailstr , passstr);
+                    MyAsyncTask myasynctask = new MyAsyncTask();
+                    myasynctask.execute(emailstr , passstr);
                 }
-
             }
         });
 
@@ -68,12 +69,50 @@ public class Login extends AppCompatActivity {
         auth.signInWithEmailAndPassword(uemail , upass).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 FirebaseUser user = auth.getCurrentUser();
-                Toast.makeText(Login.this , "Login Successful!" , Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Login.this , Home.class));
+                if (user != null) {
+
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(email.getText().toString().trim())
+                            .build();
+
+                    user.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("SignUp", "User profile updated.");
+                                        Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(Login.this , Home.class));
+                                    }
+                                }
+                            });
+                }
             }
             else{
+                pass.setText("");
                 Toast.makeText(Login.this , "Login failed!" , Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private class MyAsyncTask extends AsyncTask<String , String , String> {
+
+        ProgressDialog progressDialog;
+        @Override
+        protected void onProgressUpdate(String... strings){
+            progressDialog = ProgressDialog.show(Login.this , "Login" , "Signing in...");
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            publishProgress("Login");
+            signInAccount(strings[0] , strings[1]);
+            return "Successfull";
+        }
+
+        @Override
+        protected void onPostExecute(String string){
+            progressDialog.dismiss();
+        }
     }
 }
