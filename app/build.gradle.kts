@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation (libs.okhttp3.logging.interceptor)
     implementation(libs.squareup.picasso)
     implementation (libs.retrofit)
     implementation(libs.converter.gson)

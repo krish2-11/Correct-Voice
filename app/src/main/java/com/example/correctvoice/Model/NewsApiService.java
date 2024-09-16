@@ -4,11 +4,12 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface NewsApiService {
-    @GET("top-headlines")
-    Call<MainNews> getTopHeadlines(
-            @Query("country") String country,
-            @Query("category") String category,
-            @Query("apiKey") String apiKey
-    );
-}
+    // Retrofit Interface
+    public interface NewsApiService {
+        @GET("news")
+        Call<MainNews> getNews(
+                @Query("apikey") String apiKey,
+                @Query("category") String category,
+                @Query("language") String language
+        );
+    }

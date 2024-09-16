@@ -3,14 +3,14 @@ package com.example.correctvoice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -29,8 +29,6 @@ public class Home extends AppCompatActivity {
     TabLayout tabs;
     ViewPager2 vp2;
     MyViewPagerAdapter mvpa;
-    TextView tv;
-    ImageView user_icon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +40,13 @@ public class Home extends AppCompatActivity {
             return insets;
         });
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         tabs = findViewById(R.id.tabs);
         vp2 = findViewById(R.id.viewpager);
         mvpa = new MyViewPagerAdapter(this);
         vp2.setAdapter(mvpa);
-        user_icon = (ImageView)findViewById(R.id.user_icon);
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         if (user != null) {
@@ -56,11 +55,10 @@ public class Home extends AppCompatActivity {
 
                 userRef.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         // Get user data from the snapshot
                         UserModel user = dataSnapshot.getValue(UserModel.class);
                         if (user != null) {
-                            // Handle user data
                             Toast.makeText(getApplicationContext(), "User Name: " + user.getName() , Toast.LENGTH_LONG).show();
                         } else {
                             Log.d("UserData", "No user data found");
@@ -71,18 +69,7 @@ public class Home extends AppCompatActivity {
                         Log.e("UserData", "Failed to read user data", databaseError.toException());
                     }
                 });
-
-//            String name = user.getDisplayName();
-//            Toast.makeText(this, "User Name: " + name , Toast.LENGTH_LONG).show();
         }
-
-
-        user_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Home.this , UserProfile.class));
-            }
-        });
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -107,5 +94,27 @@ public class Home extends AppCompatActivity {
                 tabs.getTabAt(position).select();
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the toolbar
+        getMenuInflater().inflate(R.menu.drawer_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle toolbar item clicks here
+        int id = item.getItemId();
+
+        if (id == R.id.nav_bookmark) {
+            startActivity(new Intent(Home.this,BookMarkedNews.class));
+            return true;
+        } else if (id == R.id.nav_user_account) {
+            startActivity(new Intent(Home.this , UserProfile.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="Login"
-                android:textColor="@color/greenish"
+                android:textColor="@color/black"
                 android:background="@drawable/buttonstyle"
                 app:cornerRadius="32dp"
                 />
@@ -100,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Or"
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:alpha="0.7"/>
             <View
@@ -111,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="Register"
-                android:textColor="@color/greenish"
+                android:textColor="@color/black"
                 android:background="@drawable/buttonstyle"
                 app:cornerRadius="32dp"
                 />

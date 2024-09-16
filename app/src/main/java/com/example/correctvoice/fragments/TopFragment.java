@@ -1,28 +1,24 @@
 package com.example.correctvoice.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.correctvoice.ChoosedModel;
 import com.example.correctvoice.Model.AllNewsList;
-import com.example.correctvoice.Model.MainNews;
 import com.example.correctvoice.Model.Model;
-import com.example.correctvoice.Model.NewsApiClient;
-import com.example.correctvoice.Model.NewsApiService;
+import com.example.correctvoice.NewsArticle;
 import com.example.correctvoice.R;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class TopFragment extends Fragment {
@@ -36,6 +32,15 @@ public class TopFragment extends Fragment {
         newsList = view.findViewById(R.id.list_news);
         AllNewsList allNewsList = AllNewsList.getInstance();
         ArrayList<Model> models = allNewsList.getGeneralNews();
+        newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Model selected = (Model) adapterView.getItemAtPosition(i);
+                ChoosedModel.getInstance().setArticle(selected);
+                Toast.makeText(getContext(),selected.getDescription().length() + "",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext() , NewsArticle.class));
+            }
+        });
         NewsAdapter adapter = new NewsAdapter(getContext() , models);
         newsList.setAdapter(adapter);
         return view;

@@ -1,24 +1,39 @@
 package com.example.correctvoice.Model;
 
 public class Model {
-    String author , title , urlimage;
-
-    public String getAuther() {
-        return author;
-    }
+    String title;
+    String description;
+    String image_url;
 
     public String getTitle() {
         return title;
     }
 
-
-    public String getUrlimage() {
-        return urlimage;
-    }
-
-    public Model(String auther, String title, String urlimage) {
-        this.author = auther;
+    public void setTitle(String title) {
         this.title = title;
-        this.urlimage = urlimage;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public Model(String title, String description, String image_url) {
+        this.title = title;
+        this.description = description;
+        this.image_url = image_url;
+    }
+
+
 }

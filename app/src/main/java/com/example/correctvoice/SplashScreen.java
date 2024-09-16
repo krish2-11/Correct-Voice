@@ -32,7 +32,7 @@ import retrofit2.Response;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private String API_KEY = "0303163d028c4dd295d64e946d81dc92";
+    private String API_KEY = "pub_535289fa5de6db4a9d35535a857c9943e1b24";
     private static int SPLASH_TIME_OUT = 3000;
     Call<MainNews> call;
     NewsApiService apiService;
@@ -67,9 +67,15 @@ public class SplashScreen extends AppCompatActivity {
 
     private void loadNewsLists() {
         apiService = NewsApiClient.getClient().create(NewsApiService.class);
-        String[] Category = { "General" , "Business" , "Entertainment" , "Health" , "Science" , "Sports" , "Technology" };
+        String[] Category = {"business",
+                "entertainment",
+                "health",
+                "science",
+                "sports",
+                "technology",
+                "top"};
         for(String selectedCategory : Category ){
-            call = apiService.getTopHeadlines("us", selectedCategory ,  API_KEY);
+            call = apiService.getNews(API_KEY, selectedCategory ,  "en");
             loadModel(selectedCategory);
         }
     }
@@ -87,30 +93,30 @@ public class SplashScreen extends AppCompatActivity {
                     }
 
                     if (response.isSuccessful() && response.body() != null) {
-                        List<Model> articles = response.body().getArticles();
+                        List<Model> articles = response.body().getResults();
                         ArrayList<Model> models = new ArrayList<>(articles);
                         Log.d("News", "Fetched");
                         AllNewsList allNewsList = AllNewsList.getInstance();
                         switch (selectedcategory){
-                            case "General" :
+                            case "top" :
                                 allNewsList.setGeneralNews(models);
                                 break;
-                            case "Business" :
+                            case "business" :
                                 allNewsList.setBusinessNews(models);
                                 break;
-                            case "Entertainment" :
+                            case "entertainment" :
                                 allNewsList.setEntertaimentNews(models);
                                 break;
-                            case "Health" :
+                            case "health" :
                                 allNewsList.setHealthNews(models);
                                 break;
-                            case "Science" :
+                            case "science" :
                                 allNewsList.setScienceNews(models);
                                 break;
-                            case "Sports" :
+                            case "sports" :
                                 allNewsList.setSportsNews(models);
                                 break;
-                            case "Technology" :
+                            case "technology" :
                                 allNewsList.setTechnologyNews(models);
                         }
                     } else {

@@ -4,5 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#00246B</color>
     <color name="greenish">#CADCFC</color>
+    <color name="red">#FF0000</color>
+    <color name="lightred">#F96167</color>
+    <color name="yellow">#F9E795</color>
 
 </resources>

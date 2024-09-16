@@ -44,45 +44,9 @@ public class NewsAdapter extends ArrayAdapter<Model> {
         TextView auth = convertView.findViewById(R.id.author);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
         title.setText(md.getTitle());
-        auth.setText(md.getAuther());
-        String url = md.getUrlimage();
-        new ImageLoadTask(url, image).execute();
         Log.d("News uploading", "News is being uploaded");
-
         return convertView;
     }
 
-    public static class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
 
-        private String url;
-        private ImageView imageView;
-
-        public ImageLoadTask(String url, ImageView imageView) {
-            this.url = url;
-            this.imageView = imageView;
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... params) {
-            try {
-                URL urlConnection = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection
-                        .openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-
-    }
 }
