@@ -32,6 +32,7 @@ public class Home extends AppCompatActivity {
     ViewPager2 vp2;
     MyViewPagerAdapter mvpa;
     FirebaseUser user;
+    private final String email = "goswamikrish.211@gmail.com";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,14 +60,10 @@ public class Home extends AppCompatActivity {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
 
         vp2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -98,8 +95,8 @@ public class Home extends AppCompatActivity {
         }
         else if (id == R.id.nav_feedback) {
             Intent it = new Intent(Intent.ACTION_SEND);
-            String email = "goswamikrish.211@gmail.com";
             it.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+            it.putExtra(Intent.EXTRA_SUBJECT, new String[]{"Feedback"});
             it.setType("message/rfc822");
             startActivity(Intent.createChooser(it,"Choose Mail App"));
             return true;

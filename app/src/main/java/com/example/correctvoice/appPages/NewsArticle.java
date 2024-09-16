@@ -75,8 +75,13 @@ public class NewsArticle extends AppCompatActivity {
             public void onClick(View view) {
                 Model bookmarked = choosed;
                 DbHandler db = new DbHandler(NewsArticle.this);
-                db.insertNewsDetails(bookmarked);
-                Toast.makeText(NewsArticle.this,"BookMarked!",Toast.LENGTH_SHORT).show();
+                if(db.findAndRemoveIfPresent(bookmarked)){
+                    Toast.makeText(NewsArticle.this,"Removed From Bookmark!",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    db.insertNewsDetails(bookmarked);
+                    Toast.makeText(NewsArticle.this, "BookMarked!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

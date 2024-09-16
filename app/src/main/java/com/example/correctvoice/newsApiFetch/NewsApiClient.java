@@ -5,7 +5,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewsApiClient {
-//    private static final String BASE_URL = "https://newsdata.io/api/1/";
+    private static final String BASE_URL = "https://newsdata.io/api/1/";
     private static Retrofit retrofit;
 
     public static Retrofit getClient() {
@@ -18,7 +18,7 @@ public class NewsApiClient {
                     .build();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl("https://newsdata.io/api/1/")  // Correct base URL
+                    .baseUrl(BASE_URL)  // Correct base URL
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

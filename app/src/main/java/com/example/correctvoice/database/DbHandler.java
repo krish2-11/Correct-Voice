@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class DbHandler extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "bookmarkdb";
-    private static final String TABLE_BOOK = "bookmarked";
+    private static final String TABLE_BOOKMARK = "bookmarked";
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";
     private static final String KEY_DESCRIPTION = "description";
@@ -25,7 +25,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE = "CREATE TABLE " + TABLE_BOOK + "("
+        String CREATE_TABLE = "CREATE TABLE " + TABLE_BOOKMARK + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_TITLE + " TEXT,"
                 + KEY_DESCRIPTION + " TEXT,"
@@ -37,7 +37,7 @@ public class DbHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if exist
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOK);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOKMARK);
         // Create tables again
         onCreate(db);
     }
@@ -54,7 +54,29 @@ public class DbHandler extends SQLiteOpenHelper {
         cValues.put(KEY_DESCRIPTION, description);
         cValues.put(KEY_IMAGE, image);
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(TABLE_BOOK, null, cValues);
+        long newRowId = db.insert(TABLE_BOOKMARK, null, cValues);
+        db.close();
+    }
+
+    @SuppressLint("Range")
+    public boolean findAndRemoveIfPresent(Model m){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT id, title, description ,image FROM " + TABLE_BOOKMARK;
+        Cursor cursor = db.rawQuery(query, null);
+        while (cursor.moveToNext()) {
+            String title = cursor.getString(cursor.getColumnIndex(KEY_TITLE));
+            if(m.getTitle().equals(title)){
+                int id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+                DeleteUser(id);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void DeleteUser(int userid){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_BOOKMARK, KEY_ID+" = ?",new String[]{String.valueOf(userid)});
         db.close();
     }
 
@@ -63,7 +85,7 @@ public class DbHandler extends SQLiteOpenHelper {
     public ArrayList<Model> GetAllNews() {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<Model> newsList = new ArrayList<>();
-        String query = "SELECT title, description ,image FROM " + TABLE_BOOK;
+        String query = "SELECT title, description ,image FROM " + TABLE_BOOKMARK;
         Cursor cursor = db.rawQuery(query, null);
         while (cursor.moveToNext()) {
             String title = cursor.getString(cursor.getColumnIndex(KEY_TITLE));

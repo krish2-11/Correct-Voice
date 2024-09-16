@@ -21,11 +21,6 @@ import com.example.correctvoice.R;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TechnologyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TechnologyFragment extends Fragment {
     ListView newsList;
     @Override
