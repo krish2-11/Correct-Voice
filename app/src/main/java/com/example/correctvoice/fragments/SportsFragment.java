@@ -12,10 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.correctvoice.ChoosedModel;
+import com.example.correctvoice.Adapter.NewsAdapter;
+import com.example.correctvoice.Model.ChoosedModel;
 import com.example.correctvoice.Model.AllNewsList;
 import com.example.correctvoice.Model.Model;
-import com.example.correctvoice.NewsArticle;
+import com.example.correctvoice.appPages.NewsArticle;
 import com.example.correctvoice.R;
 
 import java.util.ArrayList;
@@ -42,7 +43,6 @@ public class SportsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Model selected = (Model) adapterView.getItemAtPosition(i);
                 ChoosedModel.getInstance().setArticle(selected);
-                Toast.makeText(getContext(),selected.getDescription().length() + "",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getContext() , NewsArticle.class));
             }
         });

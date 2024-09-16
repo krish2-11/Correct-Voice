@@ -1,4 +1,4 @@
-package com.example.correctvoice;
+package com.example.correctvoice.appPages;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.correctvoice.Adapter.MyViewPagerAdapter;
+import com.example.correctvoice.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +31,7 @@ public class Home extends AppCompatActivity {
     TabLayout tabs;
     ViewPager2 vp2;
     MyViewPagerAdapter mvpa;
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,29 +50,8 @@ public class Home extends AppCompatActivity {
         vp2 = findViewById(R.id.viewpager);
         mvpa = new MyViewPagerAdapter(this);
         vp2.setAdapter(mvpa);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        if (user != null) {
-            String uid = user.getUid();
-                DatabaseReference userRef = firebaseDatabase.getReference("users").child(uid);
-
-                userRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        // Get user data from the snapshot
-                        UserModel user = dataSnapshot.getValue(UserModel.class);
-                        if (user != null) {
-                            Toast.makeText(getApplicationContext(), "User Name: " + user.getName() , Toast.LENGTH_LONG).show();
-                        } else {
-                            Log.d("UserData", "No user data found");
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull  DatabaseError databaseError) {
-                        Log.e("UserData", "Failed to read user data", databaseError.toException());
-                    }
-                });
-        }
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -108,10 +90,18 @@ public class Home extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.nav_bookmark) {
-            startActivity(new Intent(Home.this,BookMarkedNews.class));
+            startActivity(new Intent(Home.this, BookMarkedNews.class));
             return true;
         } else if (id == R.id.nav_user_account) {
             startActivity(new Intent(Home.this , UserProfile.class));
+            return true;
+        }
+        else if (id == R.id.nav_feedback) {
+            Intent it = new Intent(Intent.ACTION_SEND);
+            String email = "goswamikrish.211@gmail.com";
+            it.putExtra(Intent.EXTRA_EMAIL, new String[]{email});
+            it.setType("message/rfc822");
+            startActivity(Intent.createChooser(it,"Choose Mail App"));
             return true;
         }
 

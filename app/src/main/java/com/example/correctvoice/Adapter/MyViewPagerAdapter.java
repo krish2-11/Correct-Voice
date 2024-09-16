@@ -1,4 +1,4 @@
-package com.example.correctvoice;
+package com.example.correctvoice.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.correctvoice.Model.AlreadyFragment;
 import com.example.correctvoice.fragments.BusinessFragment;
 import com.example.correctvoice.fragments.EntertainmentFragment;
 import com.example.correctvoice.fragments.HealthFragment;
@@ -34,19 +35,19 @@ public class MyViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new TopFragment();
+                return AlreadyFragment.getTop();
             case 1:
-                return new EntertainmentFragment();
+                return AlreadyFragment.getEntertainment();
             case 2:
-                return new SportsFragment();
+                return AlreadyFragment.getSports();
             case 3:
-                return new BusinessFragment();
+                return AlreadyFragment.getBusiness();
             case 4:
-                return new ScienceFragment();
+                return AlreadyFragment.getScience();
             case 5:
-                return new TechnologyFragment();
+                return AlreadyFragment.getTechnology();
             case 6:
-                return new HealthFragment();
+                return AlreadyFragment.getHealth();
         }
         return null;
     }

@@ -1,4 +1,6 @@
-package com.example.correctvoice.Model;
+package com.example.correctvoice.newsApiFetch;
+
+import com.example.correctvoice.Model.MainNews;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

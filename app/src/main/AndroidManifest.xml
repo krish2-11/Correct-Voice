@@ -15,16 +15,16 @@
         android:theme="@style/Theme.CorrectVoice"
         tools:targetApi="31">
         <activity
-            android:name=".BookMarkedNews"
+            android:name=".appPages.BookMarkedNews"
             android:exported="false" />
         <activity
-            android:name=".NewsArticle"
+            android:name=".appPages.NewsArticle"
             android:exported="false" />
         <activity
-            android:name=".UserProfile"
+            android:name=".appPages.UserProfile"
             android:exported="false" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".appPages.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,13 +33,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Home"
+            android:name=".appPages.Home"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".appPages.Register"
             android:exported="false" />
         <activity
-            android:name=".Login"
+            android:name=".appPages.Login"
             android:exported="false" />
 
         <meta-data

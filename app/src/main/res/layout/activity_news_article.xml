@@ -1,49 +1,67 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightred"
-    android:id="@+id/main">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/gradient"
+    android:padding="16dp">
 
-    <ImageButton
-        android:id="@+id/bookmark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/baseline_bookmarks_24"/>
-
-    <TextView
-        android:id="@+id/titleofnews"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/bookmark"
-        android:paddingBottom="30dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:fontFamily="@font/albert_sans_bold"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="800dp"
-        app:cardCornerRadius="50dp"
-        app:cardBackgroundColor="@color/yellow"
-        app:layout_constraintTop_toBottomOf="@id/titleofnews">
+        android:layout_height="match_parent"
+        android:background="@drawable/itemstyle"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/baseline_bookmarks_24"/>
+        <!-- Title -->
+        <TextView
+            android:id="@+id/titleofnews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="Title"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Image -->
+        <ImageView
+            android:id="@+id/imagenews"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Description -->
         <TextView
             android:id="@+id/descofnews"
-            android:paddingTop="70dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif-medium"
-            android:text="Description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Description"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

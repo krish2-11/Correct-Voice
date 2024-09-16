@@ -1,4 +1,4 @@
-package com.example.correctvoice;
+package com.example.correctvoice.appPages;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.correctvoice.R;
+import com.example.correctvoice.database.DbHandler;
+import com.example.correctvoice.database.UserData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -108,7 +111,6 @@ public class Register extends AppCompatActivity {
                                                 if (task.isSuccessful()) {
                                                     Log.d("SignUp", "User profile updated.");
                                                     Toast.makeText(Register.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                                                    saveUserData();
                                                     startActivity(new Intent(Register.this , Home.class));
                                                 }
                                             }
@@ -118,27 +120,6 @@ public class Register extends AppCompatActivity {
                         else {
                             String errorMessage = task.getException() != null ? task.getException().getMessage() : "Account creation failed";
                             Toast.makeText(Register.this, "Account creation failed: " + errorMessage, Toast.LENGTH_SHORT).show();
-                            name.setText("");
-                            email.setText("");
-                            pass.setText("");
-                            conpass.setText("");
-                        }
-                    }
-                });
-    }
-
-    private void saveUserData() {
-
-        UserModel um = new UserModel(uname ,uemail, password);
-
-        myref.child("users").child(Objects.requireNonNull(auth.getCurrentUser()).getUid()).setValue(um)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Register.this, "Data stored successfully!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(Register.this, "Data store failed!", Toast.LENGTH_SHORT).show();
                             name.setText("");
                             email.setText("");
                             pass.setText("");

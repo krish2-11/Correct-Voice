@@ -1,4 +1,4 @@
-package com.example.correctvoice;
+package com.example.correctvoice.appPages;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,14 +8,18 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.correctvoice.Model.AllNewsList;
+import com.example.correctvoice.Model.ChoosedModel;
+import com.example.correctvoice.database.DbHandler;
 import com.example.correctvoice.Model.Model;
-import com.example.correctvoice.fragments.NewsAdapter;
+import com.example.correctvoice.Adapter.NewsAdapter;
+import com.example.correctvoice.R;
 
 import java.util.ArrayList;
 
@@ -32,6 +36,14 @@ public class BookMarkedNews extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+        }
+
         newsList = findViewById(R.id.newslist);
         DbHandler db = new DbHandler(BookMarkedNews.this);
         ArrayList<Model> models = db.GetAllNews();
@@ -40,11 +52,16 @@ public class BookMarkedNews extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Model selected = (Model) adapterView.getItemAtPosition(i);
                 ChoosedModel.getInstance().setArticle(selected);
-                Toast.makeText(BookMarkedNews.this,selected.getDescription().length() + "",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(BookMarkedNews.this, NewsArticle.class));
             }
         });
         NewsAdapter adapter = new NewsAdapter(BookMarkedNews.this , models);
         newsList.setAdapter(adapter);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        // Handle the back button press
+        onBackPressed();
+        return true;
     }
 }

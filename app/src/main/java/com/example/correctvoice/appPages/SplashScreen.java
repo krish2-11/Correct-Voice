@@ -1,4 +1,4 @@
-package com.example.correctvoice;
+package com.example.correctvoice.appPages;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.correctvoice.Model.AllNewsList;
 import com.example.correctvoice.Model.MainNews;
 import com.example.correctvoice.Model.Model;
-import com.example.correctvoice.Model.NewsApiClient;
-import com.example.correctvoice.Model.NewsApiService;
+import com.example.correctvoice.R;
+import com.example.correctvoice.newsApiFetch.NewsApiClient;
+import com.example.correctvoice.newsApiFetch.NewsApiService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -32,7 +32,7 @@ import retrofit2.Response;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private String API_KEY = "pub_535289fa5de6db4a9d35535a857c9943e1b24";
+    private String API_KEY = "pub_535889ecb5bfa9b35c0a02c991959f0ca60c1";
     private static int SPLASH_TIME_OUT = 3000;
     Call<MainNews> call;
     NewsApiService apiService;

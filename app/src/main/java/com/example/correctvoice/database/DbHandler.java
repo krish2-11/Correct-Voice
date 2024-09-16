@@ -1,4 +1,4 @@
-package com.example.correctvoice;
+package com.example.correctvoice.database;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -42,7 +42,7 @@ public class DbHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void insertNewsDetails(Model m) {
+    public void insertNewsDetails(Model m) {
         //Get the Data Repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
         //Create a new map of values, where column names are the keys

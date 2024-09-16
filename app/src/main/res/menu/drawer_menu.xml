@@ -8,4 +8,7 @@
         android:id="@+id/nav_user_account"
         android:icon="@drawable/user_icon"
         android:title="My Account" />
+    <item
+        android:id="@+id/nav_feedback"
+        android:title="Feedback" />
 </menu>

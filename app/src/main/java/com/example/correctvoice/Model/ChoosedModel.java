@@ -1,6 +1,4 @@
-package com.example.correctvoice;
-
-import com.example.correctvoice.Model.Model;
+package com.example.correctvoice.Model;
 
 public class ChoosedModel {
     Model article;
